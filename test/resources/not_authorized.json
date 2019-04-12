@@ -1,0 +1,5 @@
+{
+    "status": "error",
+    "error": "У Вас нет прав для проведения данной операции",
+    "code": "common.login_required"
+}
