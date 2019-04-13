@@ -1,5 +1,3 @@
-import 'package:thetale_api/thetale_api.dart';
-
 main() {
-  
+  // TODO: show some example casees
 }
