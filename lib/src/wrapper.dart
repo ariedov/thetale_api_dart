@@ -11,8 +11,8 @@ class TaleApiWrapper {
   final TaleApi api;
   final String apiUrl;
 
-  Map<String, String> get headers 
-    => createHeadersFromSession(apiUrl, storage.readSession());
+  Map<String, String> get headers =>
+      createHeadersFromSession(apiUrl, storage.readSession());
 
   Future<ApiInfo> apiInfo() async {
     var sessionPair = await api.apiInfo();
@@ -21,8 +21,13 @@ class TaleApiWrapper {
     return sessionPair.data;
   }
 
-  Future<ThirdPartyLink> auth() => api.auth(headers: headers);
-  
+  Future<ThirdPartyLink> auth([
+    String applicationName,
+    String applicationInfo,
+    String applicationDescription,
+  ]) =>
+      api.auth(headers: headers);
+
   Future<ThirdPartyStatus> authStatus() async {
     var sessionPair = await api.authStatus(headers: headers);
     if (sessionPair.data.isAccepted) {
@@ -36,6 +41,25 @@ class TaleApiWrapper {
 
   Future<PendingOperation> help() => api.help(headers: headers);
 
-  Future<PendingOperation> checkOperation(String pendingUrl) => api.checkOperation(pendingUrl, headers: headers);
+  Future<PendingOperation> checkOperation(String pendingUrl) =>
+      api.checkOperation(pendingUrl, headers: headers);
 }
 
+class WrapperBuilder {
+  
+  TaleApiWrapper build([
+    String apiUrl,
+    String applicationId,
+    String appVersion,
+    SessionStorage storage,
+  ]) {
+
+    return TaleApiWrapper(
+        storage,
+        TaleApi(
+            apiUrl: apiUrl,
+            applicationId: applicationId,
+            appVersion: appVersion),
+        apiUrl);
+  }
+}

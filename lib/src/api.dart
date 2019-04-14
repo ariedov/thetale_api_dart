@@ -6,17 +6,12 @@ import 'package:thetale_api/src/models.dart';
 import 'package:thetale_api/src/converters.dart';
 import 'package:thetale_api/src/session.dart';
 
-const String appVersion = "0.0.1";
-
-const String apiUrl = "https://the-tale.org";
-
-const String applicationId = "epic_tale_telegram";
-const String applicationName = "Сказка в Телеграмме";
-const String applicationInfo = "Телеграм бот для игры в сказку";
-const String applicationDescription = "Телеграм бот для игры в сказку";
-
 class TaleApi {
-  TaleApi();
+  TaleApi({this.apiUrl, this.applicationId, this.appVersion});
+
+  final String apiUrl;
+  final String applicationId;
+  final String appVersion;
 
   Future<SessionDataPair<ApiInfo>> apiInfo() async {
     const method = "/api/info";
@@ -30,7 +25,12 @@ class TaleApi {
         _processResponse<ApiInfo>(response.body, convertApiInfo));
   }
 
-  Future<ThirdPartyLink> auth({Map<String, String> headers}) async {
+  Future<ThirdPartyLink> auth({
+      Map<String, String> headers,
+      String applicationName,
+      String applicationInfo, 
+      String applicationDescription,
+  }) async {
     const method = "/accounts/third-party/tokens/api/request-authorisation";
 
     final response = await http.post(
