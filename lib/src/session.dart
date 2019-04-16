@@ -7,7 +7,9 @@ class SessionInfo {
 
 abstract class SessionStorage {
 
-  void storeSession(SessionInfo sessionInfo);
+  void addSession(SessionInfo sessionInfo);
+
+  void updateSession(SessionInfo sessionInfo);
 
   SessionInfo readSession();
 }

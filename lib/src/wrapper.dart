@@ -5,18 +5,23 @@ import 'package:thetale_api/src/session.dart';
 /// This class stores the logic of when the client should store or use the [SessionInfo]
 /// You should use [TaleApi] for more direct access to the API
 class TaleApiWrapper {
-  TaleApiWrapper(this.storage, this.api, this.apiUrl);
+  TaleApiWrapper(this.api, this.apiUrl);
 
-  final SessionStorage storage;
   final TaleApi api;
   final String apiUrl;
 
+  SessionStorage _storage;
+
   Map<String, String> get headers =>
-      createHeadersFromSession(apiUrl, storage.readSession());
+      createHeadersFromSession(apiUrl, _storage.readSession());
+
+  void setStorage(SessionStorage storage) {
+    _storage = storage;
+  }
 
   Future<ApiInfo> apiInfo() async {
     var sessionPair = await api.apiInfo();
-    storage.storeSession(sessionPair.sessionInfo);
+    _storage.addSession(sessionPair.sessionInfo);
 
     return sessionPair.data;
   }
@@ -31,7 +36,7 @@ class TaleApiWrapper {
   Future<ThirdPartyStatus> authStatus() async {
     var sessionPair = await api.authStatus(headers: headers);
     if (sessionPair.data.isAccepted) {
-      storage.storeSession(sessionPair.sessionInfo);
+      _storage.updateSession(sessionPair.sessionInfo);
     }
 
     return sessionPair.data;
@@ -51,11 +56,9 @@ class WrapperBuilder {
     String apiUrl,
     String applicationId,
     String appVersion,
-    SessionStorage storage,
   ]) {
 
     return TaleApiWrapper(
-        storage,
         TaleApi(
             apiUrl: apiUrl,
             applicationId: applicationId,
