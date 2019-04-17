@@ -12,52 +12,57 @@ class TaleApiWrapper {
 
   SessionStorage _storage;
 
-  Map<String, String> get headers =>
-      createHeadersFromSession(apiUrl, _storage.readSession());
+  Future<Map<String, String>> getHeaders() async {
+    return createHeadersFromSession(apiUrl, await _storage.readSession());
+  }
 
   void setStorage(SessionStorage storage) {
     _storage = storage;
   }
 
-  Future<ApiInfo> apiInfo() async {
-    var sessionPair = await api.apiInfo();
-    _storage.addSession(sessionPair.sessionInfo);
+  Future<TaleResponse<ApiInfo>> apiInfo() async {
+    var taleResponse = await api.apiInfo();
+    await _storage.addSession(taleResponse.sessionInfo);
 
-    return sessionPair.data;
+    return taleResponse;
   }
 
   Future<ThirdPartyLink> auth([
     String applicationName,
     String applicationInfo,
     String applicationDescription,
-  ]) =>
-      api.auth(headers: headers);
-
-  Future<ThirdPartyStatus> authStatus() async {
-    var sessionPair = await api.authStatus(headers: headers);
-    if (sessionPair.data.isAccepted) {
-      _storage.updateSession(sessionPair.sessionInfo);
-    }
-
-    return sessionPair.data;
+  ]) async {
+      return api.auth(headers: await getHeaders());
   }
 
-  Future<GameInfo> gameInfo() => api.gameInfo(headers: headers);
+  Future<TaleResponse<ThirdPartyStatus>> authStatus() async {
+    var sessionPair = await api.authStatus(headers: await getHeaders());
+    if (sessionPair.data.isAccepted) {
+      await _storage.updateSession(sessionPair.sessionInfo);
+    }
 
-  Future<PendingOperation> help() => api.help(headers: headers);
+    return sessionPair;
+  }
 
-  Future<PendingOperation> checkOperation(String pendingUrl) =>
-      api.checkOperation(pendingUrl, headers: headers);
+  Future<GameInfo> gameInfo() async {
+    return api.gameInfo(headers: await getHeaders());
+  } 
+
+  Future<PendingOperation> help() async {
+    return api.help(headers: await getHeaders());
+  } 
+
+  Future<PendingOperation> checkOperation(String pendingUrl) async {
+      return api.checkOperation(pendingUrl, headers: await getHeaders());
+  }
 }
 
 class WrapperBuilder {
-  
   TaleApiWrapper build([
     String apiUrl,
     String applicationId,
     String appVersion,
   ]) {
-
     return TaleApiWrapper(
         TaleApi(
             apiUrl: apiUrl,

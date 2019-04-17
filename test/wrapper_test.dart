@@ -15,7 +15,7 @@ void main() {
   });
 
   test("api info save session test", () async {
-    when(api.apiInfo()).thenAnswer((_) => Future(() => SessionDataPair(null, null)));
+    when(api.apiInfo()).thenAnswer((_) => Future(() => TaleResponse(null, null)));
     var wrapper = TaleApiWrapper(api, "");
     wrapper.setStorage(sessionStorage);
 
@@ -26,7 +26,7 @@ void main() {
   });
 
   test("auth read header test", () async {
-    when(sessionStorage.readSession()).thenReturn(SessionInfo("sessionId", "csrfToken"));
+    when(sessionStorage.readSession()).thenAnswer((_) => Future(() => (SessionInfo("sessionId", "csrfToken"))));
     var wrapper = TaleApiWrapper(api, "");
     wrapper.setStorage(sessionStorage);
 
@@ -37,9 +37,9 @@ void main() {
   });
 
   test("auth status unaccepted test", () async {
-    when(sessionStorage.readSession()).thenReturn(SessionInfo("sessionId", "csrfToken"));
+    when(sessionStorage.readSession()).thenAnswer((_) => Future(() => (SessionInfo("sessionId", "csrfToken"))));
     var mockStatus = ThirdPartyStatus("", 0, "", 0, /* unaccepted */ 1);
-    when(api.authStatus(headers: anyNamed("headers"))).thenAnswer((_) => Future(() => SessionDataPair(null, mockStatus)));
+    when(api.authStatus(headers: anyNamed("headers"))).thenAnswer((_) => Future(() => TaleResponse(null, mockStatus)));
     var wrapper = TaleApiWrapper(api, "");
     wrapper.setStorage(sessionStorage);
 
@@ -51,9 +51,9 @@ void main() {
   });
 
   test("auth status accepted test", () async {
-    when(sessionStorage.readSession()).thenReturn(SessionInfo("sessionId", "csrfToken"));
+    when(sessionStorage.readSession()).thenAnswer((_) => Future(() => (SessionInfo("sessionId", "csrfToken"))));
     var mockStatus = ThirdPartyStatus("", 0, "", 0, /* accepted */ 2);
-    when(api.authStatus(headers: anyNamed("headers"))).thenAnswer((_) => Future(() => SessionDataPair(null, mockStatus)));
+    when(api.authStatus(headers: anyNamed("headers"))).thenAnswer((_) => Future(() => TaleResponse(null, mockStatus)));
     var wrapper = TaleApiWrapper(api, "");
     wrapper.setStorage(sessionStorage);
 
@@ -61,11 +61,11 @@ void main() {
 
     verify(api.authStatus(headers: anyNamed("headers")));
     verify(sessionStorage.readSession());
-    verify(sessionStorage.addSession(any)); 
+    verify(sessionStorage.updateSession(any)); 
   });
 
   test("auth game info header test", () async {
-    when(sessionStorage.readSession()).thenReturn(SessionInfo("sessionId", "csrfToken"));
+    when(sessionStorage.readSession()).thenAnswer((_) => Future(() => (SessionInfo("sessionId", "csrfToken"))));
     var wrapper = TaleApiWrapper(api, "");
     wrapper.setStorage(sessionStorage);
 
@@ -76,7 +76,7 @@ void main() {
   });
 
   test("auth help header test", () async {
-    when(sessionStorage.readSession()).thenReturn(SessionInfo("sessionId", "csrfToken"));
+    when(sessionStorage.readSession()).thenAnswer((_) => Future(() => (SessionInfo("sessionId", "csrfToken"))));
     var wrapper = TaleApiWrapper(api, "");
     wrapper.setStorage(sessionStorage);
 
@@ -87,7 +87,7 @@ void main() {
   });
 
   test("auth check operation header test", () async {
-    when(sessionStorage.readSession()).thenReturn(SessionInfo("sessionId", "csrfToken"));
+    when(sessionStorage.readSession()).thenAnswer((_) => Future(() => (SessionInfo("sessionId", "csrfToken"))));
     var wrapper = TaleApiWrapper(api, "");
     wrapper.setStorage(sessionStorage);
 

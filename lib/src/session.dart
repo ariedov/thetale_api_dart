@@ -7,11 +7,11 @@ class SessionInfo {
 
 abstract class SessionStorage {
 
-  void addSession(SessionInfo sessionInfo);
+  Future<void> addSession(SessionInfo sessionInfo);
 
-  void updateSession(SessionInfo sessionInfo);
+  Future<void> updateSession(SessionInfo sessionInfo);
 
-  SessionInfo readSession();
+  Future<SessionInfo> readSession();
 }
 
 Map<String, String> createHeadersFromSession(

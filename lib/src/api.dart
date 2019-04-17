@@ -13,7 +13,7 @@ class TaleApi {
   final String applicationId;
   final String appVersion;
 
-  Future<SessionDataPair<ApiInfo>> apiInfo() async {
+  Future<TaleResponse<ApiInfo>> apiInfo() async {
     const method = "/api/info";
     final response = await http.get(
         "$apiUrl/$method?api_version=1.0&api_client=$applicationId-$appVersion");
@@ -21,7 +21,7 @@ class TaleApi {
     print("Headers: ${response.headers}");
     print("Body: ${response.body}");
 
-    return SessionDataPair(readSessionFromHeader(response.headers),
+    return TaleResponse(readSessionFromHeader(response.headers),
         _processResponse<ApiInfo>(response.body, convertApiInfo));
   }
 
@@ -46,7 +46,7 @@ class TaleApi {
         response.body, convertThirdPartyLink);
   }
 
-  Future<SessionDataPair<ThirdPartyStatus>> authStatus(
+  Future<TaleResponse<ThirdPartyStatus>> authStatus(
       {Map<String, String> headers}) async {
     const method = "/accounts/third-party/tokens/api/authorisation-state";
 
@@ -54,7 +54,7 @@ class TaleApi {
         "$apiUrl/$method?api_version=1.0&api_client=$applicationId-$appVersion",
         headers: headers);
 
-    return SessionDataPair(readSessionFromHeader(response.headers),
+    return TaleResponse(readSessionFromHeader(response.headers),
         _processResponse(response.body, convertThirdPartyStatus));
   }
 
@@ -124,8 +124,8 @@ SessionInfo readSessionInfo(String cookie) {
   return SessionInfo(session, csrf);
 }
 
-class SessionDataPair<T> {
-  SessionDataPair(this.sessionInfo, this.data);
+class TaleResponse<T> {
+  TaleResponse(this.sessionInfo, this.data);
 
   final SessionInfo sessionInfo;
   final T data;
