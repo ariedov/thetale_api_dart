@@ -32,7 +32,10 @@ class TaleApiWrapper {
     String applicationInfo,
     String applicationDescription,
   ]) async {
-      return api.auth(headers: await getHeaders());
+      return api.auth(headers: await getHeaders(), 
+        applicationName: applicationName, 
+        applicationInfo: applicationInfo,
+        applicationDescription: applicationDescription);
   }
 
   Future<TaleResponse<ThirdPartyStatus>> authStatus() async {
