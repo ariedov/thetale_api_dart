@@ -30,9 +30,9 @@ void main() {
     var wrapper = TaleApiWrapper(api, "");
     wrapper.setStorage(sessionStorage);
 
-    await wrapper.auth();
+    await wrapper.auth("", "", "");
 
-    verify(api.auth(headers: anyNamed("headers")));
+    verify(api.auth(headers: anyNamed("headers"), applicationName: "", applicationInfo: "", applicationDescription: ""));
     verify(sessionStorage.readSession());
   });
 

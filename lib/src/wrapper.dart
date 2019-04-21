@@ -27,11 +27,11 @@ class TaleApiWrapper {
     return taleResponse;
   }
 
-  Future<ThirdPartyLink> auth([
+  Future<ThirdPartyLink> auth(
     String applicationName,
     String applicationInfo,
     String applicationDescription,
-  ]) async {
+  ) async {
       return api.auth(headers: await getHeaders(), 
         applicationName: applicationName, 
         applicationInfo: applicationInfo,
