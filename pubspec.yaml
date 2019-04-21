@@ -1,6 +1,6 @@
 name: thetale_api
 description: "An implementation of https://the-tale.org api in Dart."
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/ariedov/thetale_api_dart
 author: David Leibovych <ariedov@gmail.com>
 
