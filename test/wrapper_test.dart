@@ -75,7 +75,7 @@ void main() {
     verify(sessionStorage.readSession());
   });
 
-  test("auth help header test", () async {
+  test("help header test", () async {
     when(sessionStorage.readSession()).thenAnswer((_) => Future(() => (SessionInfo("sessionId", "csrfToken"))));
     var wrapper = TaleApiWrapper(api, "");
     wrapper.setStorage(sessionStorage);
@@ -85,6 +85,18 @@ void main() {
     verify(api.help(headers: anyNamed("headers")));
     verify(sessionStorage.readSession());
   });
+
+  test("cards header test", () async {
+    when(sessionStorage.readSession()).thenAnswer((_) => Future(() => (SessionInfo("sessionId", "csrfToken"))));
+    var wrapper = TaleApiWrapper(api, "");
+    wrapper.setStorage(sessionStorage);
+
+    await wrapper.getCards();
+
+    verify(api.getCards(headers: anyNamed("headers")));
+    verify(sessionStorage.readSession());
+  });
+
 
   test("auth check operation header test", () async {
     when(sessionStorage.readSession()).thenAnswer((_) => Future(() => (SessionInfo("sessionId", "csrfToken"))));
