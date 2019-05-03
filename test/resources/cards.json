@@ -1,0 +1,54 @@
+{
+    "data": {
+        "new_cards": 0,
+        "cards": [
+            {
+                "in_storage": true,
+                "name": "новая цель: обучение",
+                "full_type": "116-5",
+                "rarity": 0,
+                "uid": "2eb4ac2980df4bbbb4f78f230a144e18",
+                "type": 116,
+                "auction": false
+            },
+            {
+                "in_storage": true,
+                "name": "новая цель: лечение спутника",
+                "full_type": "116-7",
+                "rarity": 0,
+                "uid": "a8c198e9196f42e693b2df03c86d92ec",
+                "type": 116,
+                "auction": false
+            },
+            {
+                "in_storage": true,
+                "name": "другие заботы",
+                "full_type": "47",
+                "rarity": 1,
+                "uid": "ff8a04bf29e840aab25d27e94fa8c812",
+                "type": 47,
+                "auction": false
+            },
+            {
+                "in_storage": false,
+                "name": "передышка",
+                "full_type": "100",
+                "rarity": 0,
+                "uid": "462cf905942042d4ac42f627be0f6153",
+                "type": 100,
+                "auction": false
+            }
+        ],
+        "new_card_timer": {
+            "owner_id": 29620,
+            "resources": 0.0,
+            "finish_at": 1556813064.0,
+            "id": 10388,
+            "resources_at": 1556769864.0,
+            "type": 0,
+            "speed": 1.0,
+            "border": 43200.0
+        }
+    },
+    "status": "ok"
+}

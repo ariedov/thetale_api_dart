@@ -58,6 +58,10 @@ class TaleApiWrapper {
   Future<PendingOperation> checkOperation(String pendingUrl) async {
       return api.checkOperation(pendingUrl, headers: await getHeaders());
   }
+
+  Future<String> getCards() async {
+    return api.getCards(headers: await getHeaders());
+  }
 }
 
 class WrapperBuilder {
