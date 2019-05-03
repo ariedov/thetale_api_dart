@@ -142,6 +142,29 @@ PendingOperation convertOperation(dynamic json) {
   );
 }
 
+CardList convertCardList(dynamic json) {
+  return CardList(
+    _getInt(json["new_cards"]),
+    convertCards(json["cards"])
+  );
+}
+
+List<Card> convertCards(dynamic json) {
+  final result = List<Card>();
+  for (var card in json) {
+    result.add(Card(
+      card["in_storage"] as bool,
+      card["name"] as String,
+      card["full_type"] as String,
+      _getInt(card["rarity"]),
+      card["uid"] as String,
+      _getInt(card["type"]),
+      card["auction"] as bool
+    ));
+  }
+  return result;
+}
+
 typedef Converter<T> = T Function(dynamic json);
 
 int _getInt(dynamic value) {

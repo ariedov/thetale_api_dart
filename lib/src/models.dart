@@ -142,3 +142,22 @@ class PendingOperation {
   bool get isProcessing => status == "processing";
   bool get isError => status == "error";
 }
+
+class CardList {
+  CardList(this.newCards, this.cards);
+
+  final int newCards;
+  final List<Card> cards;
+}
+
+class Card {
+  Card(this.inStorage, this.name, this.fullType, this.rarity, this.uid, this.type, this.auction);
+
+  final bool inStorage;
+  final String name;
+  final String fullType;
+  final int rarity;
+  final String uid;
+  final int type;
+  final bool auction;
+}
