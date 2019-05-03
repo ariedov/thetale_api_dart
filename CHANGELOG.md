@@ -1,4 +1,8 @@
-## 1.0.1
+## 1.0.3
+
+- Adds `get-cards` request to api and wrapper.
+
+## 1.0.2
 
 - Adds example. Makes `auth` params required. Readme updates.
 
