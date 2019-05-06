@@ -149,6 +149,13 @@ CardList convertCardList(dynamic json) {
   );
 }
 
+
+ReceivedCardList convertReceivedCardList(dynamic json) {
+  return ReceivedCardList(
+    convertCards(json["cards"])
+  );
+}
+
 List<Card> convertCards(dynamic json) {
   final result = List<Card>();
   for (var card in json) {

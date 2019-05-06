@@ -5,6 +5,8 @@ import 'package:test/test.dart';
 import 'package:thetale_api/src/converters.dart';
 import 'package:thetale_api/thetale_api.dart';
 
+import 'utils.dart';
+
 void main() {
   test("test parse error", () {
     final payload = readFileAsString("test/resources/wrong_csrf.json");
@@ -56,6 +58,17 @@ void main() {
     expect(response.data.cards.length, 4);
     expect(response.data.cards[0].uid, "2eb4ac2980df4bbbb4f78f230a144e18");
     expect(response.data.cards[2].uid, "ff8a04bf29e840aab25d27e94fa8c812");
+  });
+
+  test("test receive cards", () {
+    final payload = readFileAsString("test/resources/receive_cards.json");
+
+    final payloadJson = json.decode(payload);
+    final response = convertResponse(payloadJson, convertReceivedCardList);
+
+    expect(response.data.cards.length, 7);
+    expect(response.data.cards[0].uid, "edaa18a02ff04603aacf10fe4568eddc");
+    expect(response.data.cards[6].uid, "64e07e093cca49a88d3b4db7b3e3c063");
   });
 
   test("test headers read", () {
@@ -114,9 +127,4 @@ void main() {
     expect(operation.isError, true);
     expect(operation.error, "У Вас нет прав для проведения данной операции");
   });
-}
-
-String readFileAsString(String name) {
-  final file = new File(name);
-  return file.readAsStringSync();
 }

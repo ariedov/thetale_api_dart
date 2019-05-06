@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:http/http.dart';
 import 'package:thetale_api/thetale_api.dart';
 
 const String apiUrl = "https://the-tale.org";
@@ -24,7 +25,7 @@ main() async {
 
   TaleResponse<ThirdPartyStatus> status;
   do {
-    stdin.readLineSync();
+    sleep(Duration(seconds: 25));
     status = await wrapper.authStatus();
   } while (!status.data.isAccepted);
 
