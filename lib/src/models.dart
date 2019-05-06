@@ -143,6 +143,12 @@ class PendingOperation {
   bool get isError => status == "error";
 }
 
+class ReceivedCardList {
+  ReceivedCardList(this.cards);
+
+  final List<Card> cards;
+}
+
 class CardList {
   CardList(this.newCards, this.cards);
 

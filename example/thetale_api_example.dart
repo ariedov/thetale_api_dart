@@ -24,7 +24,7 @@ main() async {
 
   TaleResponse<ThirdPartyStatus> status;
   do {
-    stdin.readLineSync();
+    sleep(Duration(seconds: 25));
     status = await wrapper.authStatus();
   } while (!status.data.isAccepted);
 

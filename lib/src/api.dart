@@ -93,6 +93,12 @@ class TaleApi {
     return _processResponse(response.body, convertCardList);
   }
 
+  Future<ReceivedCardList> receiveNewCards({Map<String, String> headers}) async {
+    const method = "/game/cards/api/receive";
+    final response = await http.post("$apiUrl/$method?api_version=1.0&api_client=$applicationId-$appVersion", headers: headers);
+    return _processResponse(response.body, convertReceivedCardList);
+  }
+  
   T _processResponse<T>(String body, T converter(dynamic json)) {
     final bodyJson = json.decode(body);
     final taleResponse = convertResponse(bodyJson, converter);

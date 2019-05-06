@@ -58,6 +58,17 @@ void main() {
     expect(response.data.cards[2].uid, "ff8a04bf29e840aab25d27e94fa8c812");
   });
 
+  test("test receive cards", () {
+    final payload = readFileAsString("test/resources/receive_cards.json");
+
+    final payloadJson = json.decode(payload);
+    final response = convertResponse(payloadJson, convertReceivedCardList);
+
+    expect(response.data.cards.length, 7);
+    expect(response.data.cards[0].uid, "edaa18a02ff04603aacf10fe4568eddc");
+    expect(response.data.cards[6].uid, "64e07e093cca49a88d3b4db7b3e3c063");
+  });
+
   test("test headers read", () {
     const payload = """
         sessionid=csxqqjj7cyiy9b3mukhzor9z9we9twks; expires=Fri, 16-Nov-2018 16:15:22 GMT; HttpOnly; Max-Age=1209600; Path=/; Secure,csrftoken=PVw6ZDIEt2UfcxsWwtdAES9Mwlq7FH7bxoyJMw1YlIj7wc3WhB0rKt6aRhzOkrOk; expires=Fri, 01-Nov-2019 16:15:22 GMT; HttpOnly; Max-Age=31449600; Path=/; Secure""";
