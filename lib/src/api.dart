@@ -13,9 +13,11 @@ class TaleApi {
   final String applicationId;
   final String appVersion;
 
+  http.Client client = http.Client();
+
   Future<TaleResponse<ApiInfo>> apiInfo() async {
     const method = "/api/info";
-    final response = await http.get(
+    final response = await client.get(
         "$apiUrl/$method?api_version=1.0&api_client=$applicationId-$appVersion");
 
     print("Headers: ${response.headers}");
@@ -33,7 +35,7 @@ class TaleApi {
   }) async {
     const method = "/accounts/third-party/tokens/api/request-authorisation";
 
-    final response = await http.post(
+    final response = await client.post(
         "$apiUrl/$method?api_version=1.0&api_client=$applicationId-$appVersion",
         headers: headers,
         body: {
@@ -50,7 +52,7 @@ class TaleApi {
       {Map<String, String> headers}) async {
     const method = "/accounts/third-party/tokens/api/authorisation-state";
 
-    final response = await http.get(
+    final response = await client.get(
         "$apiUrl/$method?api_version=1.0&api_client=$applicationId-$appVersion",
         headers: headers);
 
@@ -60,7 +62,7 @@ class TaleApi {
 
   Future<GameInfo> gameInfo({Map<String, String> headers}) async {
     const method = "/game/api/info";
-    final response = await http.get(
+    final response = await client.get(
         "$apiUrl/$method?api_version=1.9&api_client=$applicationId-$appVersion",
         headers: headers);
 
@@ -69,20 +71,20 @@ class TaleApi {
 
   Future<PendingOperation> help({Map<String, String> headers}) async {
     const method = "/game/abilities/help/api/use";
-    final response = await http.post(
+    final response = await client.post(
         "$apiUrl/$method?api_version=1.0&api_client=$applicationId-$appVersion",
         headers: headers);
 
     final operation = convertOperation(json.decode(response.body));
     if (operation.isError) {
-      throw operation.error;
+      throw Exception(operation.error);
     }
     return operation;
   }
 
   Future<PendingOperation> checkOperation(String pendingUrl,
       {Map<String, String> headers}) async {
-    final response = await http.get("$apiUrl/$pendingUrl", headers: headers);
+    final response = await client.get("$apiUrl/$pendingUrl", headers: headers);
 
     return _processResponse(response.body, convertOperation);
   }

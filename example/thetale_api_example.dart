@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:http/http.dart';
 import 'package:thetale_api/thetale_api.dart';
 
 const String apiUrl = "https://the-tale.org";

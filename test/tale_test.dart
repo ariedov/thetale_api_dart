@@ -5,6 +5,8 @@ import 'package:test/test.dart';
 import 'package:thetale_api/src/converters.dart';
 import 'package:thetale_api/thetale_api.dart';
 
+import 'utils.dart';
+
 void main() {
   test("test parse error", () {
     final payload = readFileAsString("test/resources/wrong_csrf.json");
@@ -125,9 +127,4 @@ void main() {
     expect(operation.isError, true);
     expect(operation.error, "У Вас нет прав для проведения данной операции");
   });
-}
-
-String readFileAsString(String name) {
-  final file = new File(name);
-  return file.readAsStringSync();
 }

@@ -32,8 +32,9 @@ class TaleApiWrapper {
     String applicationInfo,
     String applicationDescription,
   ) async {
-      return api.auth(headers: await getHeaders(), 
-        applicationName: applicationName, 
+    return api.auth(
+        headers: await getHeaders(),
+        applicationName: applicationName,
         applicationInfo: applicationInfo,
         applicationDescription: applicationDescription);
   }
@@ -49,11 +50,11 @@ class TaleApiWrapper {
 
   Future<GameInfo> gameInfo() async {
     return api.gameInfo(headers: await getHeaders());
-  } 
+  }
 
   Future<PendingOperation> help() async {
     return api.help(headers: await getHeaders());
-  } 
+  }
 
   Future<PendingOperation> checkOperation(String pendingUrl) async {
     return api.checkOperation(pendingUrl, headers: await getHeaders());
@@ -74,11 +75,9 @@ class WrapperBuilder {
     String applicationId,
     String appVersion,
   ]) {
-    return TaleApiWrapper(
-        TaleApi(
-            apiUrl: apiUrl,
-            applicationId: applicationId,
-            appVersion: appVersion),
-        apiUrl);
+    final taleApi = TaleApi(
+        apiUrl: apiUrl, applicationId: applicationId, appVersion: appVersion);
+
+    return TaleApiWrapper(taleApi, apiUrl);
   }
 }
